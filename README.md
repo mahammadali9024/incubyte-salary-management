@@ -4,16 +4,16 @@ Web software for an HR Manager to manage salary data for **10,000 employees acro
 
 **Stack:** JavaScript · Node 22 · Express 5 · SQLite (Drizzle ORM) · React 19 · Mantine · TanStack Query · Vitest
 
-|                         |                                                                                                      |
-| ----------------------- | ---------------------------------------------------------------------------------------------------- |
-| Live demo               | [https://acme-salary-management-9aju.onrender.com](https://acme-salary-management-9aju.onrender.com) |
-| Demo video              | _add link_                                                                                           |
-| Requirements (one page) | [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md)                                                         |
-| Architecture            | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)                                                         |
-| Decisions & trade-offs  | [docs/DECISIONS.md](docs/DECISIONS.md)                                                               |
-| Performance             | [docs/PERFORMANCE.md](docs/PERFORMANCE.md)                                                           |
-| How AI was used         | [docs/AI_USAGE.md](docs/AI_USAGE.md)                                                                 |
-| AI agent instructions   | [docs/AI_AGENT_INSTRUCTIONS.md](docs/AI_AGENT_INSTRUCTIONS.md)                                       |
+|                         |                                                                                                                         |
+| ----------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Live demo               | [https://acme-salary-management-9aju.onrender.com](https://acme-salary-management-9aju.onrender.com)                    |
+| Demo video              | [Watch the 4-minute captioned demo](https://drive.google.com/file/d/1-cM2DHVbaYDSZq9cF5-IR3MfXS1S7KVV/view?usp=sharing) |
+| Requirements (one page) | [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md)                                                                            |
+| Architecture            | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)                                                                            |
+| Decisions & trade-offs  | [docs/DECISIONS.md](docs/DECISIONS.md)                                                                                  |
+| Performance             | [docs/PERFORMANCE.md](docs/PERFORMANCE.md)                                                                              |
+| How AI was used         | [docs/AI_USAGE.md](docs/AI_USAGE.md)                                                                                    |
+| AI agent instructions   | [docs/AI_AGENT_INSTRUCTIONS.md](docs/AI_AGENT_INSTRUCTIONS.md)                                                          |
 
 ## What the HR Manager can do
 
