@@ -10,10 +10,10 @@ const isoDate = z.iso.date('Use YYYY-MM-DD');
 export const employeeInputSchema = z.object({
   fullName: trimmed.min(1, 'Full name is required').max(120),
   email: trimmed.toLowerCase().pipe(z.email('Enter a valid email')),
-  jobTitle: z.enum(JOB_TITLES),
-  department: z.enum(DEPARTMENTS),
-  country: z.enum(COUNTRY_NAMES),
-  employmentType: z.enum(EMPLOYMENT_TYPES),
+  jobTitle: z.enum(JOB_TITLES, 'Choose a job title from the list'),
+  department: z.enum(DEPARTMENTS, 'Choose a department from the list'),
+  country: z.enum(COUNTRY_NAMES, `Country must be one of: ${COUNTRY_NAMES.join(', ')}`),
+  employmentType: z.enum(EMPLOYMENT_TYPES, `Use ${EMPLOYMENT_TYPES.join(', ')}`),
   joiningDate: isoDate,
   annualSalary: z
     .number('Salary must be a number')

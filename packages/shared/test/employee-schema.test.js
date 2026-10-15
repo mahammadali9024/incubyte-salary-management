@@ -34,3 +34,13 @@ describe('employeeInputSchema', () => {
     expect(employeeInputSchema.safeParse({ ...valid, ...override }).success).toBe(false);
   });
 });
+
+describe('employeeInputSchema messages', () => {
+  it('explains which countries are allowed', () => {
+    const result = employeeInputSchema.safeParse({ ...valid, country: 'Spain' });
+
+    expect(result.error.issues[0].message).toBe(
+      'Country must be one of: India, United States, United Kingdom, Germany, Canada, Australia, Singapore, Japan',
+    );
+  });
+});
