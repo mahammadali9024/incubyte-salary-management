@@ -1,5 +1,5 @@
-import { ActionIcon, Group, Menu, Table, Text, UnstyledButton } from '@mantine/core';
-import { IconChevronDown, IconChevronUp, IconDots, IconSelector } from '@tabler/icons-react';
+import { ActionIcon, Group, Menu, ScrollArea, Table, Text, UnstyledButton } from '@mantine/core';
+import { IconChevronDown, IconChevronUp, IconDots, IconSelector } from '../icons.js';
 import { formatMoney, formatUsd } from '../lib/format.js';
 
 function SortHeader({ field, label, params, onSort, align }) {
@@ -29,8 +29,9 @@ export function EmployeeTable({ employees, params, onSort, onOpen, onEdit, onDel
   );
 
   return (
-    <Table.ScrollContainer minWidth={900}>
-      <Table highlightOnHover verticalSpacing="xs">
+    // Scrolls inside its panel (both directions) with the header row pinned.
+    <ScrollArea h="100%" type="auto">
+      <Table highlightOnHover verticalSpacing="xs" stickyHeader miw={900}>
         <Table.Thead>
           <Table.Tr>
             {sortable('fullName', 'Name')}
@@ -88,6 +89,6 @@ export function EmployeeTable({ employees, params, onSort, onOpen, onEdit, onDel
           ))}
         </Table.Tbody>
       </Table>
-    </Table.ScrollContainer>
+    </ScrollArea>
   );
 }

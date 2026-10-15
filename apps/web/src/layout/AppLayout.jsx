@@ -1,6 +1,6 @@
 import { AppShell, Burger, Button, Group, NavLink, Text, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconChartBar, IconLogout, IconUsers } from '@tabler/icons-react';
+import { IconChartBar, IconLogout, IconUsers } from '../icons.js';
 import { NavLink as RouterLink, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext.jsx';
 
@@ -60,7 +60,11 @@ export function AppLayout() {
           />
         ))}
       </AppShell.Navbar>
-      <AppShell.Main>
+      {/* The page never grows past the viewport: content scrolls inside the main area. */}
+      <AppShell.Main
+        h="100dvh"
+        style={{ display: 'flex', flexDirection: 'column', overflow: 'auto' }}
+      >
         <Outlet />
       </AppShell.Main>
     </AppShell>

@@ -12,7 +12,7 @@ import {
   Title,
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
-import { IconPlus } from '@tabler/icons-react';
+import { IconPlus } from '../icons.js';
 import { EmployeeDetail } from '../employees/EmployeeDetail.jsx';
 import { EmployeeFilters } from '../employees/EmployeeFilters.jsx';
 import { EmployeeForm } from '../employees/EmployeeForm.jsx';
@@ -48,7 +48,7 @@ export function EmployeesPage({ toolbar }) {
   const pages = data ? Math.max(1, Math.ceil(data.total / data.pageSize)) : 1;
 
   return (
-    <Stack>
+    <Stack style={{ flex: 1, minHeight: 0 }}>
       <Group justify="space-between">
         <div>
           <Title order={2}>Employees</Title>
@@ -70,7 +70,16 @@ export function EmployeesPage({ toolbar }) {
         <Alert color="red">Could not load employees: {employees.error.message}</Alert>
       )}
 
-      <Paper withBorder radius="md" style={{ opacity: employees.isPlaceholderData ? 0.6 : 1 }}>
+      <Paper
+        withBorder
+        radius="md"
+        style={{
+          flex: 1,
+          minHeight: 320,
+          overflow: 'hidden',
+          opacity: employees.isPlaceholderData ? 0.6 : 1,
+        }}
+      >
         {data?.items.length === 0 ? (
           <Text p="xl" ta="center" c="dimmed">
             No employees match these filters.

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button, Group, Select, TextInput } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
-import { IconSearch } from '@tabler/icons-react';
+import { IconSearch } from '../icons.js';
 import { COUNTRY_NAMES, DEPARTMENTS, JOB_TITLES } from '@acme/shared';
 
 export function EmployeeFilters({ params, onChange }) {

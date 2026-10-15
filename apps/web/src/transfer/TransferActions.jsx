@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button, Menu } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
-import { IconDownload, IconUpload } from '@tabler/icons-react';
+import { IconDownload, IconUpload } from '../icons.js';
 import { downloadUrl } from '../api/client.js';
 import { useInvalidateEmployeeData } from '../employees/queries.js';
 import { ImportDialog } from './ImportDialog.jsx';

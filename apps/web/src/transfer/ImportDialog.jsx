@@ -11,7 +11,7 @@ import {
   Table,
   Text,
 } from '@mantine/core';
-import { IconFileSpreadsheet } from '@tabler/icons-react';
+import { IconFileSpreadsheet } from '../icons.js';
 import { api, downloadUrl } from '../api/client.js';
 
 const FIELD_LABELS = {
