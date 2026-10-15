@@ -3,6 +3,8 @@ import { systemClock } from './clock.js';
 import { createEmployeeService } from './employees/employee-service.js';
 import { employeeRoutes } from './employees/employee-routes.js';
 import { errorHandler } from './http/error-handler.js';
+import { createInsightsService } from './insights/insights-service.js';
+import { insightsRoutes } from './insights/insights-routes.js';
 
 /**
  * Builds the Express app around an open database. Kept separate from server.js
@@ -19,6 +21,7 @@ export function buildApp({ db, clock = systemClock }) {
   });
 
   app.use('/api/employees', employeeRoutes(createEmployeeService(db, clock)));
+  app.use('/api/insights', insightsRoutes(createInsightsService(db)));
 
   app.use('/api', (_req, res) => {
     res.status(404).json({ error: 'Not found' });
