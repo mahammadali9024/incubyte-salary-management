@@ -23,3 +23,6 @@ Salaries are whole currency units (annual gross), stored as integers — no floa
 
 ## 6. Fixed insights instead of free-form questions
 Predictable, fast, fully testable, no external LLM dependency.
+
+## 7. Exchange rates as versioned code, not a table
+Each country has exactly one currency, so aggregates are grouped by currency in SQL and converted to USD in a small, tested function. Keeping `USD_PER_UNIT` in `packages/shared` means rate changes are code-reviewed and the same rates are visible to the UI. A table becomes worthwhile only if HR needs to edit rates themselves.

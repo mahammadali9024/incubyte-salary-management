@@ -9,9 +9,12 @@
   },
   "dependencies": {
     "@acme/shared": "*",
+    "better-sqlite3": "^13.0.3",
+    "drizzle-orm": "^0.45.4",
     "express": "^5.2.1"
   },
   "devDependencies": {
+    "drizzle-kit": "^0.31.11",
     "supertest": "^7.3.1"
   }
 }
