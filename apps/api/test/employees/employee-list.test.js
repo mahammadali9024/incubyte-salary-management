@@ -11,9 +11,32 @@ describe('EmployeeService.list', () => {
 
   beforeEach(() => {
     service = createEmployeeService(testDb(), fixedClock('2026-10-15'));
-    service.create(anEmployee({ fullName: 'Asha Rao', email: 'asha@acme.test', country: 'India', annualSalary: 1_800_000 }));
-    service.create(anEmployee({ fullName: 'Ben Carter', email: 'ben@acme.test', country: 'United States', department: 'Sales', jobTitle: 'Sales Executive', annualSalary: 90_000 }));
-    service.create(anEmployee({ fullName: 'Chloe Martin', email: 'chloe@acme.test', country: 'United Kingdom', annualSalary: 65_000 }));
+    service.create(
+      anEmployee({
+        fullName: 'Asha Rao',
+        email: 'asha@acme.test',
+        country: 'India',
+        annualSalary: 1_800_000,
+      }),
+    );
+    service.create(
+      anEmployee({
+        fullName: 'Ben Carter',
+        email: 'ben@acme.test',
+        country: 'United States',
+        department: 'Sales',
+        jobTitle: 'Sales Executive',
+        annualSalary: 90_000,
+      }),
+    );
+    service.create(
+      anEmployee({
+        fullName: 'Chloe Martin',
+        email: 'chloe@acme.test',
+        country: 'United Kingdom',
+        annualSalary: 65_000,
+      }),
+    );
   });
 
   it('pages results and reports the total', () => {
@@ -24,8 +47,12 @@ describe('EmployeeService.list', () => {
   });
 
   it('searches by name or email, case-insensitively', () => {
-    expect(service.list(query({ search: 'carter' })).items.map((e) => e.email)).toEqual(['ben@acme.test']);
-    expect(service.list(query({ search: 'CHLOE@' })).items.map((e) => e.fullName)).toEqual(['Chloe Martin']);
+    expect(service.list(query({ search: 'carter' })).items.map((e) => e.email)).toEqual([
+      'ben@acme.test',
+    ]);
+    expect(service.list(query({ search: 'CHLOE@' })).items.map((e) => e.fullName)).toEqual([
+      'Chloe Martin',
+    ]);
   });
 
   it('treats wildcard characters in a search literally', () => {
@@ -33,13 +60,17 @@ describe('EmployeeService.list', () => {
   });
 
   it('filters by country, department and job title together', () => {
-    const page = service.list(query({ country: 'United States', department: 'Sales', jobTitle: 'Sales Executive' }));
+    const page = service.list(
+      query({ country: 'United States', department: 'Sales', jobTitle: 'Sales Executive' }),
+    );
 
     expect(page.items.map((e) => e.fullName)).toEqual(['Ben Carter']);
   });
 
   it('sorts by the requested field and direction', () => {
-    const names = service.list(query({ sortBy: 'fullName', sortDir: 'desc' })).items.map((e) => e.fullName);
+    const names = service
+      .list(query({ sortBy: 'fullName', sortDir: 'desc' }))
+      .items.map((e) => e.fullName);
 
     expect(names).toEqual(['Chloe Martin', 'Ben Carter', 'Asha Rao']);
   });

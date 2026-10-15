@@ -11,9 +11,14 @@ const MAX_FILE_BYTES = 5 * 1024 * 1024;
 const MAX_ROWS = 20_000;
 const XLSX_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
-const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: MAX_FILE_BYTES, files: 1 } });
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: MAX_FILE_BYTES, files: 1 },
+});
 
-const exportQuery = employeeFiltersSchema.extend({ format: z.enum(['csv', 'xlsx']).default('xlsx') });
+const exportQuery = employeeFiltersSchema.extend({
+  format: z.enum(['csv', 'xlsx']).default('xlsx'),
+});
 const importQuery = z.object({ dryRun: z.enum(['true', 'false']).default('false') });
 
 function formatOf(filename) {
@@ -45,21 +50,27 @@ export function transferRoutes({ employeeRepository, importService, clock }) {
     sendFile(res, await buildImportTemplate(), 'employee-import-template.xlsx', 'xlsx');
   });
 
-  router.post('/import', (req, res, next) => {
-    upload.single('file')(req, res, (err) => {
-      if (err?.code === 'LIMIT_FILE_SIZE') return next(new ValidationError('File is larger than 5 MB'));
-      next(err);
-    });
-  }, async (req, res) => {
-    const { dryRun } = validate(importQuery, req.query);
-    if (!req.file) throw new ValidationError('Attach a file in the "file" field');
+  router.post(
+    '/import',
+    (req, res, next) => {
+      upload.single('file')(req, res, (err) => {
+        if (err?.code === 'LIMIT_FILE_SIZE')
+          return next(new ValidationError('File is larger than 5 MB'));
+        next(err);
+      });
+    },
+    async (req, res) => {
+      const { dryRun } = validate(importQuery, req.query);
+      if (!req.file) throw new ValidationError('Attach a file in the "file" field');
 
-    const rows = await readSpreadsheet(req.file.buffer, formatOf(req.file.originalname));
-    if (rows.length > MAX_ROWS) throw new ValidationError(`Files are limited to ${MAX_ROWS} rows`);
+      const rows = await readSpreadsheet(req.file.buffer, formatOf(req.file.originalname));
+      if (rows.length > MAX_ROWS)
+        throw new ValidationError(`Files are limited to ${MAX_ROWS} rows`);
 
-    const report = importService.run(rows, { dryRun: dryRun === 'true' });
-    res.status(report.errors.length > 0 ? 422 : 200).json(report);
-  });
+      const report = importService.run(rows, { dryRun: dryRun === 'true' });
+      res.status(report.errors.length > 0 ? 422 : 200).json(report);
+    },
+  );
 
   return router;
 }

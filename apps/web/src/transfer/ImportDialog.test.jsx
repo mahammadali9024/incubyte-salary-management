@@ -5,7 +5,15 @@ import { renderWithMantine } from '../test/render.jsx';
 import { ImportDialog } from './ImportDialog.jsx';
 
 const json = (status, body) => ({ ok: status < 400, status, json: async () => body });
-const report = (overrides) => ({ committed: false, rows: 3, created: 2, updated: 1, unchanged: 0, errors: [], ...overrides });
+const report = (overrides) => ({
+  committed: false,
+  rows: 3,
+  created: 2,
+  updated: 1,
+  unchanged: 0,
+  errors: [],
+  ...overrides,
+});
 
 function setup(responses) {
   globalThis.fetch = vi.fn().mockImplementation(async () => responses.shift());
@@ -46,7 +54,10 @@ describe('ImportDialog', () => {
   });
 
   it('commits after a clean preview and reports back', async () => {
-    const { user, onImported } = setup([json(200, report()), json(200, report({ committed: true }))]);
+    const { user, onImported } = setup([
+      json(200, report()),
+      json(200, report({ committed: true })),
+    ]);
     await chooseFile(user);
     await user.click(screen.getByRole('button', { name: 'Check file' }));
 

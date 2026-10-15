@@ -25,7 +25,14 @@ import { transferRoutes } from './transfer/transfer-routes.js';
  * @param {number} [deps.bcryptRounds]
  * @param {string} [deps.staticDir] built web app to serve (production)
  */
-export function buildApp({ db, sessionSecret, clock = systemClock, secureCookies = false, bcryptRounds, staticDir }) {
+export function buildApp({
+  db,
+  sessionSecret,
+  clock = systemClock,
+  secureCookies = false,
+  bcryptRounds,
+  staticDir,
+}) {
   if (!sessionSecret) throw new Error('sessionSecret is required');
 
   const app = express();

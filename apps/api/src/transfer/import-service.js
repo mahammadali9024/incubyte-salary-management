@@ -24,7 +24,11 @@ export function createImportService(db, employees) {
       const result = employeeInputSchema.safeParse(values);
       if (!result.success) {
         for (const issue of result.error.issues) {
-          errors.push({ row: rowNumber, field: String(issue.path[0] ?? ''), message: issue.message });
+          errors.push({
+            row: rowNumber,
+            field: String(issue.path[0] ?? ''),
+            message: issue.message,
+          });
         }
         continue;
       }
@@ -39,7 +43,8 @@ export function createImportService(db, employees) {
     return { valid, errors };
   }
 
-  const isUnchanged = (current, input) => COMPARED_FIELDS.every((field) => current[field] === input[field]);
+  const isUnchanged = (current, input) =>
+    COMPARED_FIELDS.every((field) => current[field] === input[field]);
 
   return {
     /**
@@ -47,7 +52,14 @@ export function createImportService(db, employees) {
      * @param {{ dryRun?: boolean }} [options]
      */
     run(rows, { dryRun = false } = {}) {
-      const report = { committed: false, rows: rows.length, created: 0, updated: 0, unchanged: 0, errors: [] };
+      const report = {
+        committed: false,
+        rows: rows.length,
+        created: 0,
+        updated: 0,
+        unchanged: 0,
+        errors: [],
+      };
       if (rows.length === 0) {
         report.errors.push({ row: null, field: null, message: 'The file has no employee rows' });
         return report;

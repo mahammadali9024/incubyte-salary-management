@@ -11,7 +11,8 @@ describe('InsightsService', () => {
     const db = testDb();
     const employees = createEmployeeService(db, fixedClock('2026-10-15'));
     let n = 0;
-    const hire = (overrides) => employees.create(anEmployee({ email: `e${++n}@acme.test`, ...overrides }));
+    const hire = (overrides) =>
+      employees.create(anEmployee({ email: `e${++n}@acme.test`, ...overrides }));
 
     // India: engineers 1.0M, 2.0M, 6.0M INR; one designer 1.5M INR
     hire({ country: 'India', jobTitle: 'Software Engineer', annualSalary: 1_000_000 });
@@ -19,8 +20,18 @@ describe('InsightsService', () => {
     hire({ country: 'India', jobTitle: 'Software Engineer', annualSalary: 6_000_000 });
     hire({ country: 'India', jobTitle: 'Designer', department: 'Design', annualSalary: 1_500_000 });
     // United States: 100k and 150k USD in Sales
-    hire({ country: 'United States', department: 'Sales', jobTitle: 'Sales Executive', annualSalary: 100_000 });
-    hire({ country: 'United States', department: 'Sales', jobTitle: 'Sales Executive', annualSalary: 150_000 });
+    hire({
+      country: 'United States',
+      department: 'Sales',
+      jobTitle: 'Sales Executive',
+      annualSalary: 100_000,
+    });
+    hire({
+      country: 'United States',
+      department: 'Sales',
+      jobTitle: 'Sales Executive',
+      annualSalary: 150_000,
+    });
 
     insights = createInsightsService(db);
   });
@@ -52,8 +63,26 @@ describe('InsightsService', () => {
 
   it('reports average salary per job title within a country', () => {
     expect(insights.byJobTitle('India')).toEqual([
-      { jobTitle: 'Software Engineer', headcount: 3, min: 1_000_000, max: 6_000_000, average: 3_000_000, median: 2_000_000, currency: 'INR', averageUsd: 36_000 },
-      { jobTitle: 'Designer', headcount: 1, min: 1_500_000, max: 1_500_000, average: 1_500_000, median: 1_500_000, currency: 'INR', averageUsd: 18_000 },
+      {
+        jobTitle: 'Software Engineer',
+        headcount: 3,
+        min: 1_000_000,
+        max: 6_000_000,
+        average: 3_000_000,
+        median: 2_000_000,
+        currency: 'INR',
+        averageUsd: 36_000,
+      },
+      {
+        jobTitle: 'Designer',
+        headcount: 1,
+        min: 1_500_000,
+        max: 1_500_000,
+        average: 1_500_000,
+        median: 1_500_000,
+        currency: 'INR',
+        averageUsd: 18_000,
+      },
     ]);
   });
 

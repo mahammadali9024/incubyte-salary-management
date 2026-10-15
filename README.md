@@ -4,15 +4,15 @@ Web software for an HR Manager to manage salary data for **10,000 employees acro
 
 **Stack:** JavaScript · Node 22 · Express 5 · SQLite (Drizzle ORM) · React 19 · Mantine · TanStack Query · Vitest
 
-| | |
-|---|---|
-| Live demo | _add the Render URL here after deploying_ |
-| Demo video | _add link_ |
+|                         |                                              |
+| ----------------------- | -------------------------------------------- |
+| Live demo               | _add the Render URL here after deploying_    |
+| Demo video              | _add link_                                   |
 | Requirements (one page) | [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md) |
-| Architecture | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
-| Decisions & trade-offs | [docs/DECISIONS.md](docs/DECISIONS.md) |
-| Performance | [docs/PERFORMANCE.md](docs/PERFORMANCE.md) |
-| How AI was used | [docs/AI_USAGE.md](docs/AI_USAGE.md) |
+| Architecture            | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
+| Decisions & trade-offs  | [docs/DECISIONS.md](docs/DECISIONS.md)       |
+| Performance             | [docs/PERFORMANCE.md](docs/PERFORMANCE.md)   |
+| How AI was used         | [docs/AI_USAGE.md](docs/AI_USAGE.md)         |
 
 ## What the HR Manager can do
 
@@ -34,23 +34,23 @@ npm run dev           # API on :3000, UI on http://localhost:5173 (proxies /api)
 
 Sign in with the development defaults: `hr@acme.example` / `acme-hr-demo` (override with `HR_EMAIL` / `HR_PASSWORD`).
 
-| Command | What it does |
-|---|---|
-| `npm test` | All unit, API and component tests (~5 s) |
-| `npm run lint` | ESLint |
-| `npm run seed -- --reset` | Rebuild the database from scratch |
+| Command                      | What it does                                     |
+| ---------------------------- | ------------------------------------------------ |
+| `npm test`                   | All unit, API and component tests (~5 s)         |
+| `npm run lint`               | ESLint                                           |
+| `npm run seed -- --reset`    | Rebuild the database from scratch                |
 | `npm run build && npm start` | Production build; the API serves the UI on :3000 |
 
 ### Configuration
 
-| Variable | Default | Notes |
-|---|---|---|
-| `PORT` | `3000` | |
-| `DATABASE_PATH` | `data/salary.db` | relative to `apps/api` |
-| `SESSION_SECRET` | dev-only value | **required** when `NODE_ENV=production` |
-| `HR_EMAIL` / `HR_PASSWORD` | `hr@acme.example` / `acme-hr-demo` | the HR user is created or updated on start |
-| `SEED_ON_START` | `false` | seed 10,000 employees if the database is empty |
-| `STATIC_DIR` | `apps/web/dist` if built | built UI to serve |
+| Variable                   | Default                            | Notes                                          |
+| -------------------------- | ---------------------------------- | ---------------------------------------------- |
+| `PORT`                     | `3000`                             |                                                |
+| `DATABASE_PATH`            | `data/salary.db`                   | relative to `apps/api`                         |
+| `SESSION_SECRET`           | dev-only value                     | **required** when `NODE_ENV=production`        |
+| `HR_EMAIL` / `HR_PASSWORD` | `hr@acme.example` / `acme-hr-demo` | the HR user is created or updated on start     |
+| `SEED_ON_START`            | `false`                            | seed 10,000 employees if the database is empty |
+| `STATIC_DIR`               | `apps/web/dist` if built           | built UI to serve                              |
 
 ## Deploy (Render, free tier)
 

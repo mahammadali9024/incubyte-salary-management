@@ -27,7 +27,9 @@ describe('seed data', () => {
     for (const { annualSalary, history, joiningDate } of people) {
       expect(history[0].effectiveDate).toBe(joiningDate);
       expect(history.at(-1).annualSalary).toBe(annualSalary);
-      expect(history.map((h) => h.effectiveDate)).toEqual(history.map((h) => h.effectiveDate).sort());
+      expect(history.map((h) => h.effectiveDate)).toEqual(
+        history.map((h) => h.effectiveDate).sort(),
+      );
     }
   });
 

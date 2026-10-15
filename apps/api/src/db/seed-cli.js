@@ -19,5 +19,7 @@ if (!isEmpty(db)) {
 } else {
   const started = performance.now();
   const total = seedEmployees(db);
-  console.log(`Seeded ${total} employees into ${dbPath} in ${Math.round(performance.now() - started)} ms`);
+  console.log(
+    `Seeded ${total} employees into ${dbPath} in ${Math.round(performance.now() - started)} ms`,
+  );
 }

@@ -4,26 +4,26 @@ The brief's scale is 10,000 employees. Everything below was measured on the seed
 
 ## Database operations
 
-| Operation | Time |
-|---|---|
+| Operation                                                                     | Time   |
+| ----------------------------------------------------------------------------- | ------ |
 | Seed 10,000 employees + 13,768 salary-history rows (batched, one transaction) | ~0.5 s |
-| Org overview (count, USD payroll, countries) | 1.7 ms |
-| Pay by country (aggregates + medians) | 9.8 ms |
-| Job-title averages in India | 4.2 ms |
-| Payroll by department | 2.8 ms |
-| Salary distribution (US) | 1.3 ms |
-| List page sorted by USD salary | 1.6 ms |
-| List search "smith" | 4.9 ms |
-| Filtered list, page 20 | 2.1 ms |
+| Org overview (count, USD payroll, countries)                                  | 1.7 ms |
+| Pay by country (aggregates + medians)                                         | 9.8 ms |
+| Job-title averages in India                                                   | 4.2 ms |
+| Payroll by department                                                         | 2.8 ms |
+| Salary distribution (US)                                                      | 1.3 ms |
+| List page sorted by USD salary                                                | 1.6 ms |
+| List search "smith"                                                           | 4.9 ms |
+| Filtered list, page 20                                                        | 2.1 ms |
 
 ## Import / export (all 10,000 employees)
 
-| Format | File size | Export | Parse | Import (dry run) |
-|---|---|---|---|---|
-| XLSX | 636 KB | 550 ms | 328 ms | 564 ms |
-| CSV | 1.2 MB | 103 ms | 167 ms | 486 ms |
+| Format | File size | Export | Parse  | Import (dry run) |
+| ------ | --------- | ------ | ------ | ---------------- |
+| XLSX   | 636 KB    | 550 ms | 328 ms | 564 ms           |
+| CSV    | 1.2 MB    | 103 ms | 167 ms | 486 ms           |
 
-The export → re-import round trip reports all 10,000 rows as *unchanged*, which is also covered by a test at small scale.
+The export → re-import round trip reports all 10,000 rows as _unchanged_, which is also covered by a test at small scale.
 
 ## Why it is fast enough without more machinery
 

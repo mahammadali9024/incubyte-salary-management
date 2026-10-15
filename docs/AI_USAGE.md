@@ -22,12 +22,12 @@ The solution was built with **Claude Code** (Anthropic's agentic coding CLI, mod
 
 ## Where human judgement changed the outcome
 
-| Decision | Effect |
-|---|---|
-| Free-form, natural-language questions → **fixed insights** | Removed an LLM dependency, API key and cost; results are deterministic and testable |
+| Decision                                                                     | Effect                                                                                                                           |
+| ---------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Free-form, natural-language questions → **fixed insights**                   | Removed an LLM dependency, API key and cost; results are deterministic and testable                                              |
 | **JavaScript + Express** instead of the agent's initial TypeScript + Fastify | History was rewritten before any push so the commits show the final stack from the start; the service layer was reused unchanged |
-| **Reseed on redeploy** accepted | Allowed SQLite on Render's free tier instead of adding a hosted database |
-| Import **and** export required | Became the all-or-nothing import with preview |
+| **Reseed on redeploy** accepted                                              | Allowed SQLite on Render's free tier instead of adding a hosted database                                                         |
+| Import **and** export required                                               | Became the all-or-nothing import with preview                                                                                    |
 
 ## Where the agent's first attempt was wrong (and how it was caught)
 

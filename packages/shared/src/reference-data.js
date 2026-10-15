@@ -55,7 +55,6 @@ export const DEPARTMENTS = [
   'Customer Support',
 ];
 
-
 export const JOB_TITLES = [
   'Software Engineer',
   'Senior Software Engineer',
@@ -72,6 +71,4 @@ export const JOB_TITLES = [
   'Support Specialist',
 ];
 
-
 export const EMPLOYMENT_TYPES = ['Full-time', 'Part-time', 'Contract'];
-

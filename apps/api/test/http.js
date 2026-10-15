@@ -8,7 +8,10 @@ const BCRYPT_ROUNDS = 4; // fast hashing keeps tests quick
 
 /** An app on a fresh in-memory database with the test HR user, and an unauthenticated client. */
 export function testApp({ clock, db = testDb() } = {}) {
-  createAuthService(db, { bcryptRounds: BCRYPT_ROUNDS }).ensureUser(TEST_USER.email, TEST_USER.password);
+  createAuthService(db, { bcryptRounds: BCRYPT_ROUNDS }).ensureUser(
+    TEST_USER.email,
+    TEST_USER.password,
+  );
   const app = buildApp({ db, clock, sessionSecret: 'test-secret', bcryptRounds: BCRYPT_ROUNDS });
   return { app, db };
 }

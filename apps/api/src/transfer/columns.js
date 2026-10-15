@@ -14,4 +14,8 @@ export const HEADERS = [
 
 export const IMPORT_COLUMNS = HEADERS.filter((h) => !h.exportOnly);
 
-export const normaliseHeader = (header) => String(header ?? '').trim().toLowerCase().replace(/\s+/g, ' ');
+export const normaliseHeader = (header) =>
+  String(header ?? '')
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, ' ');

@@ -16,14 +16,20 @@ describe('/api/employees', () => {
 
     expect(res.status).toBe(201);
     expect(res.headers.location).toBe(`/api/employees/${res.body.id}`);
-    expect(res.body).toMatchObject({ fullName: 'Asha Rao', currency: 'INR', annualSalaryUsd: 21_600 });
+    expect(res.body).toMatchObject({
+      fullName: 'Asha Rao',
+      currency: 'INR',
+      annualSalaryUsd: 21_600,
+    });
   });
 
   it('returns field-level errors for invalid input', async () => {
     const res = await create({ email: 'nope', annualSalary: -1 });
 
     expect(res.status).toBe(400);
-    expect(Object.keys(res.body.details)).toEqual(expect.arrayContaining(['email', 'annualSalary']));
+    expect(Object.keys(res.body.details)).toEqual(
+      expect.arrayContaining(['email', 'annualSalary']),
+    );
   });
 
   it('returns 409 for a duplicate email', async () => {

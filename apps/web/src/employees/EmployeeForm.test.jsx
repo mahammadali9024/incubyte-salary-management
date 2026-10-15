@@ -21,7 +21,9 @@ const employee = {
 
 function renderForm(props = {}) {
   const onSubmit = props.onSubmit ?? vi.fn().mockResolvedValue({});
-  renderWithMantine(<EmployeeForm onSubmit={onSubmit} onCancel={() => {}} submitting={false} {...props} />);
+  renderWithMantine(
+    <EmployeeForm onSubmit={onSubmit} onCancel={() => {}} submitting={false} {...props} />,
+  );
   return { onSubmit, user: userEvent.setup() };
 }
 
@@ -72,11 +74,17 @@ describe('EmployeeForm', () => {
   });
 
   it('shows a duplicate-email conflict from the server next to the email field', async () => {
-    const onSubmit = vi.fn().mockRejectedValue(new ApiError(409, { error: 'An employee with email asha@acme.test already exists' }));
+    const onSubmit = vi
+      .fn()
+      .mockRejectedValue(
+        new ApiError(409, { error: 'An employee with email asha@acme.test already exists' }),
+      );
     const { user } = renderForm({ employee, onSubmit });
 
     await user.click(screen.getByRole('button', { name: 'Save changes' }));
 
-    expect(await screen.findByText('An employee with email asha@acme.test already exists')).toBeInTheDocument();
+    expect(
+      await screen.findByText('An employee with email asha@acme.test already exists'),
+    ).toBeInTheDocument();
   });
 });

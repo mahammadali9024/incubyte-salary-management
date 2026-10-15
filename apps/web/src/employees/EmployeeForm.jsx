@@ -1,5 +1,14 @@
 import { useState } from 'react';
-import { Alert, Button, Group, NumberInput, Select, SimpleGrid, Stack, TextInput } from '@mantine/core';
+import {
+  Alert,
+  Button,
+  Group,
+  NumberInput,
+  Select,
+  SimpleGrid,
+  Stack,
+  TextInput,
+} from '@mantine/core';
 import { z } from 'zod';
 import {
   COUNTRY_NAMES,
@@ -28,7 +37,9 @@ function validationErrors(values) {
   const result = employeeUpdateSchema.safeParse(values);
   if (result.success) return {};
   const fieldErrors = z.flattenError(result.error).fieldErrors;
-  return Object.fromEntries(Object.entries(fieldErrors).map(([field, messages]) => [field, messages[0]]));
+  return Object.fromEntries(
+    Object.entries(fieldErrors).map(([field, messages]) => [field, messages[0]]),
+  );
 }
 
 /** Server errors: 400 carries per-field details; 409 is a duplicate email. */
@@ -80,25 +91,62 @@ export function EmployeeForm({ employee, onSubmit, onCancel, submitting }) {
   };
 
   const select = (field, label, data) => (
-    <Select label={label} data={data} value={values[field]} onChange={set(field)} error={errors[field]} searchable required allowDeselect={false} />
+    <Select
+      label={label}
+      data={data}
+      value={values[field]}
+      onChange={set(field)}
+      error={errors[field]}
+      searchable
+      required
+      allowDeselect={false}
+    />
   );
 
   return (
     <form onSubmit={submit} noValidate>
       <Stack>
-        {failure && <Alert color="red" role="alert">{failure}</Alert>}
-        <TextInput label="Full name" value={values.fullName} onChange={text('fullName')} error={errors.fullName} required />
-        <TextInput label="Email" type="email" value={values.email} onChange={text('email')} error={errors.email} required />
+        {failure && (
+          <Alert color="red" role="alert">
+            {failure}
+          </Alert>
+        )}
+        <TextInput
+          label="Full name"
+          value={values.fullName}
+          onChange={text('fullName')}
+          error={errors.fullName}
+          required
+        />
+        <TextInput
+          label="Email"
+          type="email"
+          value={values.email}
+          onChange={text('email')}
+          error={errors.email}
+          required
+        />
         <SimpleGrid cols={{ base: 1, sm: 2 }}>
           {select('jobTitle', 'Job title', JOB_TITLES)}
           {select('department', 'Department', DEPARTMENTS)}
           {select('country', 'Country', COUNTRY_NAMES)}
           {select('employmentType', 'Employment type', EMPLOYMENT_TYPES)}
         </SimpleGrid>
-        <TextInput label="Joining date" type="date" value={values.joiningDate} onChange={text('joiningDate')} error={errors.joiningDate} required />
+        <TextInput
+          label="Joining date"
+          type="date"
+          value={values.joiningDate}
+          onChange={text('joiningDate')}
+          error={errors.joiningDate}
+          required
+        />
         <NumberInput
           label="Annual gross salary"
-          description={currency && salary ? `≈ ${formatUsd(toUsd(salary, currency))} at the fixed rate` : 'In the country’s currency'}
+          description={
+            currency && salary
+              ? `≈ ${formatUsd(toUsd(salary, currency))} at the fixed rate`
+              : 'In the country’s currency'
+          }
           value={values.annualSalary}
           onChange={set('annualSalary')}
           error={errors.annualSalary}
@@ -120,8 +168,12 @@ export function EmployeeForm({ employee, onSubmit, onCancel, submitting }) {
           />
         )}
         <Group justify="flex-end">
-          <Button variant="default" onClick={onCancel}>Cancel</Button>
-          <Button type="submit" loading={submitting}>{employee ? 'Save changes' : 'Add employee'}</Button>
+          <Button variant="default" onClick={onCancel}>
+            Cancel
+          </Button>
+          <Button type="submit" loading={submitting}>
+            {employee ? 'Save changes' : 'Add employee'}
+          </Button>
         </Group>
       </Stack>
     </form>
@@ -129,6 +181,24 @@ export function EmployeeForm({ employee, onSubmit, onCancel, submitting }) {
 }
 
 function pick(employee) {
-  const { fullName, email, jobTitle, department, country, employmentType, joiningDate, annualSalary } = employee;
-  return { fullName, email, jobTitle, department, country, employmentType, joiningDate, annualSalary };
+  const {
+    fullName,
+    email,
+    jobTitle,
+    department,
+    country,
+    employmentType,
+    joiningDate,
+    annualSalary,
+  } = employee;
+  return {
+    fullName,
+    email,
+    jobTitle,
+    department,
+    country,
+    employmentType,
+    joiningDate,
+    annualSalary,
+  };
 }

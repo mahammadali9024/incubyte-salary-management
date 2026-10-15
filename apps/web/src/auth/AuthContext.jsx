@@ -8,7 +8,8 @@ export function AuthProvider({ children }) {
   const queryClient = useQueryClient();
   const me = useQuery({
     queryKey: ['me'],
-    queryFn: () => api.get('/auth/me').catch((err) => (err.status === 401 ? null : Promise.reject(err))),
+    queryFn: () =>
+      api.get('/auth/me').catch((err) => (err.status === 401 ? null : Promise.reject(err))),
     staleTime: Infinity,
   });
 

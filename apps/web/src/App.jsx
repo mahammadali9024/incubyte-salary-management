@@ -7,7 +7,9 @@ import { EmployeesPage } from './pages/EmployeesPage.jsx';
 import { TransferActions } from './transfer/TransferActions.jsx';
 
 // Charts are only needed on the insights page; keep them out of the initial bundle.
-const InsightsPage = lazy(() => import('./pages/InsightsPage.jsx').then((m) => ({ default: m.InsightsPage })));
+const InsightsPage = lazy(() =>
+  import('./pages/InsightsPage.jsx').then((m) => ({ default: m.InsightsPage })),
+);
 
 const pageLoader = (
   <Center mih={200}>
@@ -31,7 +33,10 @@ export function App() {
   return (
     <Routes>
       <Route element={<AppLayout />}>
-        <Route path="/employees" element={<EmployeesPage toolbar={(params) => <TransferActions params={params} />} />} />
+        <Route
+          path="/employees"
+          element={<EmployeesPage toolbar={(params) => <TransferActions params={params} />} />}
+        />
         <Route
           path="/insights"
           element={

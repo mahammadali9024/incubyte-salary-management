@@ -5,7 +5,9 @@ import { useSalaryHistory } from './queries.js';
 function Field({ label, children }) {
   return (
     <div>
-      <Text size="xs" c="dimmed">{label}</Text>
+      <Text size="xs" c="dimmed">
+        {label}
+      </Text>
       <Text size="sm">{children}</Text>
     </div>
   );
@@ -25,7 +27,9 @@ export function EmployeeDetail({ employee, onEdit }) {
       <Group justify="space-between" align="flex-start">
         <div>
           <Title order={3}>{employee.fullName}</Title>
-          <Text c="dimmed" size="sm">{employee.email}</Text>
+          <Text c="dimmed" size="sm">
+            {employee.email}
+          </Text>
         </div>
         <Badge variant="light">{employee.employmentType}</Badge>
       </Group>
@@ -37,9 +41,13 @@ export function EmployeeDetail({ employee, onEdit }) {
         <Field label="Annual salary">{formatMoney(employee.annualSalary, employee.currency)}</Field>
         <Field label="In USD (fixed rate)">{formatUsd(employee.annualSalaryUsd)}</Field>
       </SimpleGrid>
-      <Button variant="light" onClick={() => onEdit(employee)}>Edit employee</Button>
+      <Button variant="light" onClick={() => onEdit(employee)}>
+        Edit employee
+      </Button>
 
-      <Title order={5} mt="md">Salary history</Title>
+      <Title order={5} mt="md">
+        Salary history
+      </Title>
       {history.isPending ? (
         <Loader size="sm" />
       ) : (
@@ -56,7 +64,9 @@ export function EmployeeDetail({ employee, onEdit }) {
               <Table.Tr key={entry.id}>
                 <Table.Td>{entry.effectiveDate}</Table.Td>
                 <Table.Td ta="right">{formatMoney(entry.annualSalary, entry.currency)}</Table.Td>
-                <Table.Td ta="right">{change(entry, all[i + 1]) ?? (i === all.length - 1 ? 'Starting' : '—')}</Table.Td>
+                <Table.Td ta="right">
+                  {change(entry, all[i + 1]) ?? (i === all.length - 1 ? 'Starting' : '—')}
+                </Table.Td>
               </Table.Tr>
             ))}
           </Table.Tbody>

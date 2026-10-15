@@ -7,7 +7,19 @@ import { MemoryRouter } from 'react-router-dom';
 import { App } from './App.jsx';
 import { AuthProvider } from './auth/AuthContext.jsx';
 
-const employee = { id: 1, fullName: 'Asha Rao', email: 'asha@acme.test', jobTitle: 'Designer', department: 'Design', country: 'India', currency: 'INR', employmentType: 'Full-time', joiningDate: '2023-04-01', annualSalary: 1800000, annualSalaryUsd: 21600 };
+const employee = {
+  id: 1,
+  fullName: 'Asha Rao',
+  email: 'asha@acme.test',
+  jobTitle: 'Designer',
+  department: 'Design',
+  country: 'India',
+  currency: 'INR',
+  employmentType: 'Full-time',
+  joiningDate: '2023-04-01',
+  annualSalary: 1800000,
+  annualSalaryUsd: 21600,
+};
 
 function mockApi() {
   let loggedIn = false;
@@ -15,9 +27,16 @@ function mockApi() {
   globalThis.fetch = vi.fn(async (url, init = {}) => {
     calls.push(`${init.method ?? 'GET'} ${url}`);
     const json = (status, body) => ({ ok: status < 400, status, json: async () => body });
-    if (url.startsWith('/api/auth/me')) return loggedIn ? json(200, { email: 'hr@acme.test' }) : json(401, { error: 'Please log in' });
-    if (url.startsWith('/api/auth/login')) { loggedIn = true; return json(200, { email: 'hr@acme.test' }); }
-    if (url.startsWith('/api/employees')) return json(200, { items: [employee], total: 1, page: 1, pageSize: 25 });
+    if (url.startsWith('/api/auth/me'))
+      return loggedIn
+        ? json(200, { email: 'hr@acme.test' })
+        : json(401, { error: 'Please log in' });
+    if (url.startsWith('/api/auth/login')) {
+      loggedIn = true;
+      return json(200, { email: 'hr@acme.test' });
+    }
+    if (url.startsWith('/api/employees'))
+      return json(200, { items: [employee], total: 1, page: 1, pageSize: 25 });
     return json(404, {});
   });
   return calls;
@@ -31,7 +50,9 @@ describe('App', () => {
       <MantineProvider>
         <QueryClientProvider client={new QueryClient()}>
           <MemoryRouter initialEntries={['/']}>
-            <AuthProvider><App /></AuthProvider>
+            <AuthProvider>
+              <App />
+            </AuthProvider>
           </MemoryRouter>
         </QueryClientProvider>
       </MantineProvider>,

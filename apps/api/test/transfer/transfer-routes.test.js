@@ -8,15 +8,21 @@ describe('import and export endpoints', () => {
 
   beforeEach(async () => {
     api = await loggedInApi();
-    await api.post('/api/employees').send(anEmployee({ email: 'india@acme.test', country: 'India' }));
-    await api.post('/api/employees').send(anEmployee({ email: 'japan@acme.test', country: 'Japan', annualSalary: 6_000_000 }));
+    await api
+      .post('/api/employees')
+      .send(anEmployee({ email: 'india@acme.test', country: 'India' }));
+    await api
+      .post('/api/employees')
+      .send(anEmployee({ email: 'japan@acme.test', country: 'Japan', annualSalary: 6_000_000 }));
   });
 
   const upload = async (buffer, filename, query = {}) =>
     api.post('/api/employees/import').query(query).attach('file', buffer, filename);
 
   it('previews an xlsx import on a dry run', async () => {
-    const res = await upload(await xlsxFile([row({ Email: 'new@acme.test' })]), 'staff.xlsx', { dryRun: 'true' });
+    const res = await upload(await xlsxFile([row({ Email: 'new@acme.test' })]), 'staff.xlsx', {
+      dryRun: 'true',
+    });
 
     expect(res.status).toBe(200);
     expect(res.body).toMatchObject({ committed: false, created: 1 });
@@ -56,8 +62,12 @@ describe('import and export endpoints', () => {
     expect(res.headers['content-disposition']).toMatch(/attachment; filename="employees-.*\.xlsx"/);
     const sheet = (await readXlsx(res.body)).getWorksheet('Employees');
     expect(sheet.rowCount).toBe(2);
-    expect(sheet.getRow(1).values).toEqual(expect.arrayContaining(['Email', 'Currency', 'Annual Salary (USD)']));
-    expect(sheet.getRow(2).values).toEqual(expect.arrayContaining(['japan@acme.test', 'JPY', 6_000_000, 40_200]));
+    expect(sheet.getRow(1).values).toEqual(
+      expect.arrayContaining(['Email', 'Currency', 'Annual Salary (USD)']),
+    );
+    expect(sheet.getRow(2).values).toEqual(
+      expect.arrayContaining(['japan@acme.test', 'JPY', 6_000_000, 40_200]),
+    );
   });
 
   it('exports csv that can be imported back unchanged', async () => {
@@ -69,9 +79,13 @@ describe('import and export endpoints', () => {
   });
 
   it('neutralises spreadsheet formulas in exported text', async () => {
-    await api.post('/api/employees').send(anEmployee({ email: 'evil@acme.test', fullName: '=HYPERLINK("http://x")' }));
+    await api
+      .post('/api/employees')
+      .send(anEmployee({ email: 'evil@acme.test', fullName: '=HYPERLINK("http://x")' }));
 
-    const exported = await api.get('/api/employees/export').query({ format: 'csv', search: 'evil' });
+    const exported = await api
+      .get('/api/employees/export')
+      .query({ format: 'csv', search: 'evil' });
 
     expect(exported.text).toContain(`'=HYPERLINK`);
   });

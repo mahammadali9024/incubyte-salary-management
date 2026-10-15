@@ -22,14 +22,17 @@ function useInvalidateEmployeeData() {
   const queryClient = useQueryClient();
   return () =>
     Promise.all(
-      ['employees', 'salary-history', 'insights'].map((key) => queryClient.invalidateQueries({ queryKey: [key] })),
+      ['employees', 'salary-history', 'insights'].map((key) =>
+        queryClient.invalidateQueries({ queryKey: [key] }),
+      ),
     );
 }
 
 export function useSaveEmployee() {
   const invalidate = useInvalidateEmployeeData();
   return useMutation({
-    mutationFn: ({ id, values }) => (id ? api.put(`/employees/${id}`, values) : api.post('/employees', values)),
+    mutationFn: ({ id, values }) =>
+      id ? api.put(`/employees/${id}`, values) : api.post('/employees', values),
     onSuccess: invalidate,
   });
 }

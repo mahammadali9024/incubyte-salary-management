@@ -15,16 +15,33 @@ export function AppLayout() {
   const { pathname } = useLocation();
 
   return (
-    <AppShell header={{ height: 60 }} navbar={{ width: 220, breakpoint: 'sm', collapsed: { mobile: !opened } }} padding="md">
+    <AppShell
+      header={{ height: 60 }}
+      navbar={{ width: 220, breakpoint: 'sm', collapsed: { mobile: !opened } }}
+      padding="md"
+    >
       <AppShell.Header>
         <Group h="100%" px="md" justify="space-between" wrap="nowrap">
           <Group gap="sm" wrap="nowrap">
-            <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" aria-label="Toggle navigation" />
+            <Burger
+              opened={opened}
+              onClick={toggle}
+              hiddenFrom="sm"
+              size="sm"
+              aria-label="Toggle navigation"
+            />
             <Title order={4}>ACME Salaries</Title>
           </Group>
           <Group gap="sm" wrap="nowrap">
-            <Text size="sm" c="dimmed" visibleFrom="sm">{user?.email}</Text>
-            <Button variant="subtle" size="xs" leftSection={<IconLogout size={16} />} onClick={() => logout.mutate()}>
+            <Text size="sm" c="dimmed" visibleFrom="sm">
+              {user?.email}
+            </Text>
+            <Button
+              variant="subtle"
+              size="xs"
+              leftSection={<IconLogout size={16} />}
+              onClick={() => logout.mutate()}
+            >
               Sign out
             </Button>
           </Group>
@@ -32,7 +49,15 @@ export function AppLayout() {
       </AppShell.Header>
       <AppShell.Navbar p="sm">
         {LINKS.map(({ to, label, icon: Icon }) => (
-          <NavLink key={to} component={RouterLink} to={to} label={label} leftSection={<Icon size={18} />} active={pathname.startsWith(to)} onClick={close} />
+          <NavLink
+            key={to}
+            component={RouterLink}
+            to={to}
+            label={label}
+            leftSection={<Icon size={18} />}
+            active={pathname.startsWith(to)}
+            onClick={close}
+          />
         ))}
       </AppShell.Navbar>
       <AppShell.Main>

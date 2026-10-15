@@ -21,7 +21,9 @@ export function TransferActions({ params }) {
     <>
       <Menu position="bottom-end">
         <Menu.Target>
-          <Button variant="default" leftSection={<IconDownload size={16} />}>Export</Button>
+          <Button variant="default" leftSection={<IconDownload size={16} />}>
+            Export
+          </Button>
         </Menu.Target>
         <Menu.Dropdown>
           <Menu.Label>Current filters apply</Menu.Label>
@@ -29,7 +31,11 @@ export function TransferActions({ params }) {
           <Menu.Item onClick={() => exportAs('csv')}>CSV (.csv)</Menu.Item>
         </Menu.Dropdown>
       </Menu>
-      <Button variant="default" leftSection={<IconUpload size={16} />} onClick={() => setImporting(true)}>
+      <Button
+        variant="default"
+        leftSection={<IconUpload size={16} />}
+        onClick={() => setImporting(true)}
+      >
         Import
       </Button>
       <ImportDialog

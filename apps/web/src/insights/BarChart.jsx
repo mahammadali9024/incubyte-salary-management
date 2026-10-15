@@ -1,4 +1,12 @@
-import { Bar, BarChart as RBarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import {
+  Bar,
+  BarChart as RBarChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
 import { Paper, Text } from '@mantine/core';
 
 // Single-series magnitude charts: one hue (reference palette slot 1), no legend —
@@ -12,8 +20,12 @@ function ChartTooltip({ active, payload, format, labelFormat }) {
   const { payload: row, value } = payload[0];
   return (
     <Paper withBorder shadow="sm" px="sm" py={6}>
-      <Text size="xs" c="dimmed">{labelFormat ? labelFormat(row) : row.label}</Text>
-      <Text size="sm" fw={600}>{format(value)}</Text>
+      <Text size="xs" c="dimmed">
+        {labelFormat ? labelFormat(row) : row.label}
+      </Text>
+      <Text size="sm" fw={600}>
+        {format(value)}
+      </Text>
     </Paper>
   );
 }
@@ -23,11 +35,22 @@ function ChartTooltip({ active, payload, format, labelFormat }) {
  * vertical suits ordered bins such as a histogram. `format` is used in the tooltip,
  * `axisFormat` (defaults to `format`) on the value axis.
  */
-export function BarChart({ data, dataKey, format, axisFormat = format, labelFormat, layout = 'horizontal', height }) {
+export function BarChart({
+  data,
+  dataKey,
+  format,
+  axisFormat = format,
+  labelFormat,
+  layout = 'horizontal',
+  height,
+}) {
   const horizontal = layout === 'horizontal';
   const rows = data.length;
   return (
-    <ResponsiveContainer width="100%" height={height ?? (horizontal ? Math.max(160, rows * 34 + 30) : 260)}>
+    <ResponsiveContainer
+      width="100%"
+      height={height ?? (horizontal ? Math.max(160, rows * 34 + 30) : 260)}
+    >
       <RBarChart
         data={data}
         layout={horizontal ? 'vertical' : 'horizontal'}
@@ -37,12 +60,31 @@ export function BarChart({ data, dataKey, format, axisFormat = format, labelForm
         <CartesianGrid stroke={GRID} horizontal={!horizontal} vertical={horizontal} />
         {horizontal ? (
           <>
-            <XAxis type="number" tickFormatter={axisFormat} tick={AXIS} axisLine={false} tickLine={false} />
-            <YAxis type="category" dataKey="label" width={170} tick={AXIS} axisLine={false} tickLine={false} />
+            <XAxis
+              type="number"
+              tickFormatter={axisFormat}
+              tick={AXIS}
+              axisLine={false}
+              tickLine={false}
+            />
+            <YAxis
+              type="category"
+              dataKey="label"
+              width={170}
+              tick={AXIS}
+              axisLine={false}
+              tickLine={false}
+            />
           </>
         ) : (
           <>
-            <XAxis dataKey="label" tick={AXIS} axisLine={false} tickLine={false} interval="preserveStartEnd" />
+            <XAxis
+              dataKey="label"
+              tick={AXIS}
+              axisLine={false}
+              tickLine={false}
+              interval="preserveStartEnd"
+            />
             <YAxis tick={AXIS} axisLine={false} tickLine={false} width={40} allowDecimals={false} />
           </>
         )}

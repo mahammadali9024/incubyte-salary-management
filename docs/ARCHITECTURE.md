@@ -27,12 +27,12 @@ One process serves both the UI and the API, so there is one URL, no CORS, and on
 
 ## Layers (API)
 
-| Layer | Responsibility | Example |
-|---|---|---|
-| **Routes** | HTTP only: parse/validate input with Zod, call a service, shape the response | `employees/employee-routes.js` |
-| **Services** | Business rules, transactions | "a salary or currency change appends to the salary history" (`employee-service.js`) |
-| **Repositories** | SQL via Drizzle | search with escaped `LIKE`, USD sort expression (`employee-repository.js`) |
-| **Error handler** | Maps `ValidationError` / `NotFoundError` / `ConflictError` to 400 / 404 / 409; hides internals on 500 | `http/error-handler.js` |
+| Layer             | Responsibility                                                                                        | Example                                                                             |
+| ----------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| **Routes**        | HTTP only: parse/validate input with Zod, call a service, shape the response                          | `employees/employee-routes.js`                                                      |
+| **Services**      | Business rules, transactions                                                                          | "a salary or currency change appends to the salary history" (`employee-service.js`) |
+| **Repositories**  | SQL via Drizzle                                                                                       | search with escaped `LIKE`, USD sort expression (`employee-repository.js`)          |
+| **Error handler** | Maps `ValidationError` / `NotFoundError` / `ConflictError` to 400 / 404 / 409; hides internals on 500 | `http/error-handler.js`                                                             |
 
 Services take their dependencies as arguments (`db`, `clock`), so tests build them on an in-memory database with a fixed "today".
 
@@ -75,7 +75,7 @@ erDiagram
 
 **Edit with a pay change** — `PUT /api/employees/:id` → validate with the shared schema → in one transaction: update the row; if salary or currency changed, insert a `salary_changes` row effective on the chosen date (default today).
 
-**Import** — upload → parse xlsx/csv (headers matched by name, Excel dates and `1,250,000`-style numbers handled) → validate **every** row → if any error, return all of them (422) and write nothing → otherwise run creates/updates through the employee service in one transaction. A *dry run* executes exactly the same path and rolls back, so the preview counts are exact.
+**Import** — upload → parse xlsx/csv (headers matched by name, Excel dates and `1,250,000`-style numbers handled) → validate **every** row → if any error, return all of them (422) and write nothing → otherwise run creates/updates through the employee service in one transaction. A _dry run_ executes exactly the same path and rolls back, so the preview counts are exact.
 
 **Insights** — counts, min, max, average and USD sums are SQL aggregates; medians and histograms are computed from the salaries of one group (a few thousand integers at most) by small pure functions.
 

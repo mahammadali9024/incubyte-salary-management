@@ -1,5 +1,16 @@
 import { useState } from 'react';
-import { Alert, Anchor, Button, FileInput, Group, Modal, ScrollArea, Stack, Table, Text } from '@mantine/core';
+import {
+  Alert,
+  Anchor,
+  Button,
+  FileInput,
+  Group,
+  Modal,
+  ScrollArea,
+  Stack,
+  Table,
+  Text,
+} from '@mantine/core';
 import { IconFileSpreadsheet } from '@tabler/icons-react';
 import { api, downloadUrl } from '../api/client.js';
 
@@ -108,8 +119,9 @@ export function ImportDialog({ opened, onClose, onImported }) {
     <Modal opened={opened} onClose={close} title="Import employees" size="lg">
       <Stack>
         <Text size="sm" c="dimmed">
-          Upload a .xlsx or .csv file. Rows are matched to existing employees by email; new emails are
-          added. Nothing is saved until you confirm, and a file with any invalid row changes nothing.{' '}
+          Upload a .xlsx or .csv file. Rows are matched to existing employees by email; new emails
+          are added. Nothing is saved until you confirm, and a file with any invalid row changes
+          nothing.{' '}
           <Anchor href={downloadUrl('/employees/import-template')} size="sm">
             Download the template
           </Anchor>
@@ -127,21 +139,34 @@ export function ImportDialog({ opened, onClose, onImported }) {
           }}
           clearable
         />
-        {failure && <Alert color="red" role="alert">{failure}</Alert>}
+        {failure && (
+          <Alert color="red" role="alert">
+            {failure}
+          </Alert>
+        )}
         {preview && preview.errors.length > 0 && (
-          <Alert color="red" title={`${preview.errors.length} problem(s) found — nothing was imported`}>
-            <Text size="sm" mb="xs">Fix these rows in your spreadsheet and check the file again.</Text>
+          <Alert
+            color="red"
+            title={`${preview.errors.length} problem(s) found — nothing was imported`}
+          >
+            <Text size="sm" mb="xs">
+              Fix these rows in your spreadsheet and check the file again.
+            </Text>
             <ErrorTable errors={preview.errors} />
           </Alert>
         )}
         {preview && preview.errors.length === 0 && (
           <Alert color={changes > 0 ? 'blue' : 'gray'} title="Ready to import">
             <Summary report={preview} />
-            {changes === 0 && <Text size="sm">Everything in the file already matches — nothing to import.</Text>}
+            {changes === 0 && (
+              <Text size="sm">Everything in the file already matches — nothing to import.</Text>
+            )}
           </Alert>
         )}
         <Group justify="flex-end">
-          <Button variant="default" onClick={close}>Cancel</Button>
+          <Button variant="default" onClick={close}>
+            Cancel
+          </Button>
           {canImport ? (
             <Button loading={busy} onClick={() => run(false)}>
               Import {changes} {changes === 1 ? 'change' : 'changes'}

@@ -27,7 +27,9 @@ describe('readSpreadsheet', () => {
   });
 
   it('accepts real Excel dates and salaries typed with thousands separators', async () => {
-    const file = await xlsxFile([row({ 'Joining Date': new Date(Date.UTC(2021, 6, 15)), 'Annual Salary': '1,250,000' })]);
+    const file = await xlsxFile([
+      row({ 'Joining Date': new Date(Date.UTC(2021, 6, 15)), 'Annual Salary': '1,250,000' }),
+    ]);
 
     const [{ values }] = await readSpreadsheet(file, 'xlsx');
 
@@ -35,8 +37,20 @@ describe('readSpreadsheet', () => {
   });
 
   it('matches headers regardless of case, spacing and column order', async () => {
-    const headers = ['email', ' FULL NAME ', 'Job Title', 'Department', 'Country', 'Employment Type', 'Joining Date', 'Annual Salary'];
-    const file = await csvFile([['x@acme.test', 'X Y', 'Designer', 'Design', 'Japan', 'Contract', '2020-01-01', 5_000_000]], headers);
+    const headers = [
+      'email',
+      ' FULL NAME ',
+      'Job Title',
+      'Department',
+      'Country',
+      'Employment Type',
+      'Joining Date',
+      'Annual Salary',
+    ];
+    const file = await csvFile(
+      [['x@acme.test', 'X Y', 'Designer', 'Design', 'Japan', 'Contract', '2020-01-01', 5_000_000]],
+      headers,
+    );
 
     const [{ values }] = await readSpreadsheet(file, 'csv');
 
@@ -56,6 +70,8 @@ describe('readSpreadsheet', () => {
   });
 
   it('rejects a file that is not a spreadsheet', async () => {
-    await expect(readSpreadsheet(Buffer.from('not a zip'), 'xlsx')).rejects.toThrow(/could not be read/i);
+    await expect(readSpreadsheet(Buffer.from('not a zip'), 'xlsx')).rejects.toThrow(
+      /could not be read/i,
+    );
   });
 });

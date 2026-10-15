@@ -9,7 +9,11 @@ export function neutraliseFormula(value) {
 
 function employeesSheet(workbook, columns) {
   const sheet = workbook.addWorksheet('Employees');
-  sheet.columns = columns.map((c) => ({ header: c.label, key: c.key, width: Math.max(14, c.label.length + 4) }));
+  sheet.columns = columns.map((c) => ({
+    header: c.label,
+    key: c.key,
+    width: Math.max(14, c.label.length + 4),
+  }));
   sheet.getRow(1).font = { bold: true };
   return sheet;
 }
@@ -23,9 +27,12 @@ export async function buildExport(employees, format) {
   const workbook = new ExcelJS.Workbook();
   const sheet = employeesSheet(workbook, HEADERS);
   for (const employee of employees) {
-    sheet.addRow(Object.fromEntries(HEADERS.map(({ key }) => [key, neutraliseFormula(employee[key])])));
+    sheet.addRow(
+      Object.fromEntries(HEADERS.map(({ key }) => [key, neutraliseFormula(employee[key])])),
+    );
   }
-  const buffer = format === 'csv' ? await workbook.csv.writeBuffer() : await workbook.xlsx.writeBuffer();
+  const buffer =
+    format === 'csv' ? await workbook.csv.writeBuffer() : await workbook.xlsx.writeBuffer();
   return Buffer.from(buffer);
 }
 
@@ -55,7 +62,9 @@ export async function buildImportTemplate() {
   const longest = Math.max(...Object.values(lists).map((l) => l.length));
   for (let i = 0; i < longest; i++) allowed.addRow(Object.values(lists).map((l) => l[i]));
   allowed.addRow([]);
-  allowed.addRow(['Notes: Joining Date as YYYY-MM-DD. Annual Salary is gross, in the country currency.']);
+  allowed.addRow([
+    'Notes: Joining Date as YYYY-MM-DD. Annual Salary is gross, in the country currency.',
+  ]);
 
   return Buffer.from(await workbook.xlsx.writeBuffer());
 }

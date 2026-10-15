@@ -46,7 +46,12 @@ export function EmployeeFilters({ params, onChange }) {
           variant="subtle"
           onClick={() => {
             setSearch('');
-            onChange({ search: undefined, country: undefined, department: undefined, jobTitle: undefined });
+            onChange({
+              search: undefined,
+              country: undefined,
+              department: undefined,
+              jobTitle: undefined,
+            });
           }}
         >
           Clear filters

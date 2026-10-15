@@ -1,5 +1,16 @@
 import { useState } from 'react';
-import { Alert, Button, Drawer, Group, Modal, Pagination, Paper, Stack, Text, Title } from '@mantine/core';
+import {
+  Alert,
+  Button,
+  Drawer,
+  Group,
+  Modal,
+  Pagination,
+  Paper,
+  Stack,
+  Text,
+  Title,
+} from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconPlus } from '@tabler/icons-react';
 import { EmployeeDetail } from '../employees/EmployeeDetail.jsx';
@@ -55,11 +66,15 @@ export function EmployeesPage({ toolbar }) {
 
       <EmployeeFilters params={params} onChange={updateParams} />
 
-      {employees.isError && <Alert color="red">Could not load employees: {employees.error.message}</Alert>}
+      {employees.isError && (
+        <Alert color="red">Could not load employees: {employees.error.message}</Alert>
+      )}
 
       <Paper withBorder radius="md" style={{ opacity: employees.isPlaceholderData ? 0.6 : 1 }}>
         {data?.items.length === 0 ? (
-          <Text p="xl" ta="center" c="dimmed">No employees match these filters.</Text>
+          <Text p="xl" ta="center" c="dimmed">
+            No employees match these filters.
+          </Text>
         ) : (
           <EmployeeTable
             employees={data?.items ?? []}
@@ -74,7 +89,11 @@ export function EmployeesPage({ toolbar }) {
 
       {pages > 1 && (
         <Group justify="center">
-          <Pagination total={pages} value={params.page} onChange={(page) => updateParams({ page })} />
+          <Pagination
+            total={pages}
+            value={params.page}
+            onChange={(page) => updateParams({ page })}
+          />
         </Group>
       )}
 
@@ -83,10 +102,19 @@ export function EmployeesPage({ toolbar }) {
         onClose={() => setPanel(null)}
         position="right"
         size="lg"
-        title={panel?.mode === 'create' ? 'Add employee' : panel?.mode === 'edit' ? 'Edit employee' : 'Employee'}
+        title={
+          panel?.mode === 'create'
+            ? 'Add employee'
+            : panel?.mode === 'edit'
+              ? 'Edit employee'
+              : 'Employee'
+        }
       >
         {panel?.mode === 'view' && (
-          <EmployeeDetail employee={panel.employee} onEdit={(employee) => setPanel({ mode: 'edit', employee })} />
+          <EmployeeDetail
+            employee={panel.employee}
+            onEdit={(employee) => setPanel({ mode: 'edit', employee })}
+          />
         )}
         {(panel?.mode === 'create' || panel?.mode === 'edit') && (
           <EmployeeForm
@@ -99,14 +127,23 @@ export function EmployeesPage({ toolbar }) {
         )}
       </Drawer>
 
-      <Modal opened={Boolean(toDelete)} onClose={() => setToDelete(null)} title="Delete employee?" centered>
+      <Modal
+        opened={Boolean(toDelete)}
+        onClose={() => setToDelete(null)}
+        title="Delete employee?"
+        centered
+      >
         <Stack>
           <Text size="sm">
             This permanently removes <b>{toDelete?.fullName}</b> and their salary history.
           </Text>
           <Group justify="flex-end">
-            <Button variant="default" onClick={() => setToDelete(null)}>Cancel</Button>
-            <Button color="red" loading={remove.isPending} onClick={confirmDelete}>Delete</Button>
+            <Button variant="default" onClick={() => setToDelete(null)}>
+              Cancel
+            </Button>
+            <Button color="red" loading={remove.isPending} onClick={confirmDelete}>
+              Delete
+            </Button>
           </Group>
         </Stack>
       </Modal>

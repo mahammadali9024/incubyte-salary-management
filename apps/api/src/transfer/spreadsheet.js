@@ -47,7 +47,9 @@ export async function readSpreadsheet(buffer, format) {
 
   const columnFor = new Map();
   sheet.getRow(1).eachCell((cell, column) => {
-    const match = IMPORT_COLUMNS.find((c) => normaliseHeader(c.label) === normaliseHeader(cell.value));
+    const match = IMPORT_COLUMNS.find(
+      (c) => normaliseHeader(c.label) === normaliseHeader(cell.value),
+    );
     if (match) columnFor.set(match.key, column);
   });
   const missing = IMPORT_COLUMNS.filter((c) => !columnFor.has(c.key)).map((c) => c.label);

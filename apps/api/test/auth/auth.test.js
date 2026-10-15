@@ -38,7 +38,9 @@ describe('authentication', () => {
 
   it('rejects a tampered session cookie', async () => {
     const forged = encodeURIComponent(JSON.stringify({ email: 'x', expiresAt: Date.now() + 1e9 }));
-    const res = await request(testApp().app).get('/api/auth/me').set('Cookie', `session=s:${forged}.bad`);
+    const res = await request(testApp().app)
+      .get('/api/auth/me')
+      .set('Cookie', `session=s:${forged}.bad`);
 
     expect(res.status).toBe(401);
   });
