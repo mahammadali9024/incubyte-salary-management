@@ -4,6 +4,7 @@ import { useAuth } from './auth/AuthContext.jsx';
 import { AppLayout } from './layout/AppLayout.jsx';
 import { EmployeesPage } from './pages/EmployeesPage.jsx';
 import { InsightsPage } from './pages/InsightsPage.jsx';
+import { TransferActions } from './transfer/TransferActions.jsx';
 import { LoginPage } from './pages/LoginPage.jsx';
 
 export function App() {
@@ -21,7 +22,7 @@ export function App() {
   return (
     <Routes>
       <Route element={<AppLayout />}>
-        <Route path="/employees" element={<EmployeesPage />} />
+        <Route path="/employees" element={<EmployeesPage toolbar={(params) => <TransferActions params={params} />} />} />
         <Route path="/insights" element={<InsightsPage />} />
         <Route path="*" element={<Navigate to="/employees" replace />} />
       </Route>
