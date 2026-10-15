@@ -1,14 +1,12 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import request from 'supertest';
-import { buildApp } from '../../src/app.js';
-import { testDb } from '../db.js';
 import { anEmployee } from '../fixtures.js';
+import { loggedInApi } from '../http.js';
 
 describe('/api/insights', () => {
   let api;
 
   beforeEach(async () => {
-    api = request(buildApp({ db: testDb() }));
+    api = await loggedInApi();
     await api.post('/api/employees').send(anEmployee({ email: 'a@acme.test', annualSalary: 1_000_000 }));
     await api.post('/api/employees').send(anEmployee({ email: 'b@acme.test', annualSalary: 3_000_000 }));
   });

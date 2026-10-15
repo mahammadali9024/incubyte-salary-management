@@ -1,20 +1,23 @@
 import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { buildApp } from './app.js';
+import { createAuthService } from './auth/auth-service.js';
+import { loadConfig } from './config.js';
 import { openDb } from './db/client.js';
 import { isEmpty, seedEmployees } from './db/seed.js';
 
-const port = Number(process.env.PORT ?? 3000);
-const dbPath = process.env.DATABASE_PATH ?? 'data/salary.db';
+const config = loadConfig();
 
-mkdirSync(dirname(dbPath), { recursive: true });
-const db = openDb(dbPath);
+mkdirSync(dirname(config.dbPath), { recursive: true });
+const db = openDb(config.dbPath);
 
 // On ephemeral hosting (Render free tier) the database starts empty after each deploy.
-if (process.env.SEED_ON_START === 'true' && isEmpty(db)) {
+if (config.seedOnStart && isEmpty(db)) {
   console.log(`Seeded ${seedEmployees(db)} employees`);
 }
+createAuthService(db).ensureUser(config.hrEmail, config.hrPassword);
 
-buildApp({ db }).listen(port, () => {
-  console.log(`API listening on http://localhost:${port} (db: ${dbPath})`);
+const app = buildApp({ db, sessionSecret: config.sessionSecret, secureCookies: config.secureCookies });
+app.listen(config.port, () => {
+  console.log(`API listening on http://localhost:${config.port} (db: ${config.dbPath})`);
 });

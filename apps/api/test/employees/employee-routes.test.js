@@ -1,14 +1,12 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import request from 'supertest';
-import { buildApp } from '../../src/app.js';
-import { testDb } from '../db.js';
 import { anEmployee, fixedClock } from '../fixtures.js';
+import { loggedInApi } from '../http.js';
 
 describe('/api/employees', () => {
   let api;
 
-  beforeEach(() => {
-    api = request(buildApp({ db: testDb(), clock: fixedClock('2026-10-15') }));
+  beforeEach(async () => {
+    api = await loggedInApi({ clock: fixedClock('2026-10-15') });
   });
 
   const create = (overrides) => api.post('/api/employees').send(anEmployee(overrides));
