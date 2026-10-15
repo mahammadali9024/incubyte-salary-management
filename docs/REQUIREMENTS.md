@@ -16,7 +16,7 @@ A single persona: the **HR Manager**. Comfortable with Excel, not technical. Nee
 |                  | Add / edit / delete employee with validation                                                             | Core "manage" job; validation prevents the bad data spreadsheets allow |
 | Salary           | Gross annual base salary stored in the employee's **local currency**                                     | Matches how people are actually paid                                   |
 |                  | **Salary history**: every change recorded with an effective date                                         | HR is routinely asked "when did their pay change and by how much?"     |
-| Insights (fixed) | Min / max / average salary **per country** (local + USD)                                                 | Headline pay-question from the brief                                   |
+| Insights (fixed) | Min / max / average / median salary **per country** (local + USD)                                        | Headline pay-question from the brief                                   |
 |                  | Average salary **per job title within a country**                                                        | Fair-pay / benchmarking question                                       |
 |                  | Headcount and total payroll **per department** (USD)                                                     | Budget question                                                        |
 |                  | Salary distribution per country (histogram)                                                              | Spot outliers and compression                                          |
@@ -37,9 +37,9 @@ A single persona: the **HR Manager**. Comfortable with Excel, not technical. Nee
 | Bonus / allowance / equity components              | Base salary answers the brief's questions; components multiply the data model and UI for little demo value. The model can grow a `compensation_components` table later |
 | Free-form / natural-language questions             | Fixed insights cover the core questions with predictable, testable results and no external AI dependency or cost                                                       |
 | Multiple users, roles, audit of _who_ changed what | One persona in the brief. Salary history already records _what_ changed and _when_                                                                                     |
-| Live exchange rates                                | Fixed rates make numbers reproducible and tests deterministic; rates are a single table to update                                                                      |
+| Live exchange rates                                | Fixed rates make numbers reproducible and tests deterministic; rates are one reviewed constant to update                                                               |
 | Employee self-service, approvals workflows         | Not the HR Manager's problem as stated                                                                                                                                 |
-| Persistent production storage                      | Demo deploy on a free tier; reseeding on redeploy was agreed acceptable. Moving to Postgres is a config-level change behind the repository layer                       |
+| Persistent production storage                      | Demo deploy on a free tier; reseeding on redeploy was agreed acceptable. Moving to Postgres is contained to the db/repository layer (schema, migrations, queries)      |
 
 ## Success criteria
 
