@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { z } from 'zod';
+import { registerSchema } from '@acme/shared';
 import { validate } from '../http/validate.js';
 
 const COOKIE = 'session';
@@ -46,6 +47,12 @@ export function authRoutes(auth, { secureCookies }) {
     path: '/',
   };
 
+  function startSession(res, user) {
+    const maxAge = SESSION_HOURS * 60 * 60 * 1000;
+    const session = { email: user.email, expiresAt: Date.now() + maxAge };
+    res.cookie(COOKIE, JSON.stringify(session), { ...cookieOptions, maxAge });
+  }
+
   router.post('/login', (req, res) => {
     const { email, password } = validate(loginSchema, req.body);
     const user = auth.verify(email, password);
@@ -53,10 +60,16 @@ export function authRoutes(auth, { secureCookies }) {
       res.status(401).json({ error: 'Incorrect email or password' });
       return;
     }
-    const maxAge = SESSION_HOURS * 60 * 60 * 1000;
-    const session = { email: user.email, expiresAt: Date.now() + maxAge };
-    res.cookie(COOKIE, JSON.stringify(session), { ...cookieOptions, maxAge });
+    startSession(res, user);
     res.json({ email: user.email });
+  });
+
+  // Open self-registration: anyone can create an HR profile (see docs/DECISIONS.md, 8).
+  router.post('/register', (req, res) => {
+    const { email, password } = validate(registerSchema, req.body);
+    const user = auth.register(email, password);
+    startSession(res, user);
+    res.status(201).json({ email: user.email });
   });
 
   router.post('/logout', (_req, res) => {

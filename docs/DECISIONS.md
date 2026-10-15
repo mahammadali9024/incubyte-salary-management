@@ -33,3 +33,7 @@ Predictable, fast, fully testable, no external LLM dependency.
 ## 7. Exchange rates as versioned code, not a table
 
 Each country has exactly one currency, so aggregates are grouped by currency in SQL and converted to USD in a small, tested function. Keeping `USD_PER_UNIT` in `packages/shared` means rate changes are code-reviewed and the same rates are visible to the UI. A table becomes worthwhile only if HR needs to edit rates themselves.
+
+## 8. Open self-registration for HR profiles
+
+Added after the first build: anyone can create an HR profile from the login page, so reviewers can try the app without being given credentials. **Trade-off:** on a public URL this means anyone can read salary data. For a real deployment the same endpoint would be gated (an invite code, an admin creating users, or SSO); registration never overwrites an existing profile, and the configured `HR_EMAIL` user still exists.

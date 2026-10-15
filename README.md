@@ -33,7 +33,7 @@ npm run seed          # creates apps/api/data/salary.db with 10,000 employees (~
 npm run dev           # API on :3000, UI on http://localhost:5173 (proxies /api)
 ```
 
-Sign in with the development defaults: `hr@acme.example` / `acme-hr-demo` (override with `HR_EMAIL` / `HR_PASSWORD`).
+Sign in with the development defaults, or use **Create an HR profile** on the login page: `hr@acme.example` / `acme-hr-demo` (override with `HR_EMAIL` / `HR_PASSWORD`).
 
 | Command                      | What it does                                     |
 | ---------------------------- | ------------------------------------------------ |

@@ -63,3 +63,51 @@ describe('configuration', () => {
     expect(() => loadConfig({ NODE_ENV: 'production' })).toThrow(/SESSION_SECRET/);
   });
 });
+
+describe('creating an HR profile', () => {
+  const profile = { email: 'New.Person@ACME.test', password: 'long enough pw' };
+
+  it('creates the profile and signs the new user in', async () => {
+    const agent = request.agent(testApp().app);
+
+    const res = await agent.post('/api/auth/register').send(profile);
+
+    expect(res.status).toBe(201);
+    expect(res.body).toEqual({ email: 'new.person@acme.test' });
+    expect((await agent.get('/api/auth/me')).body).toEqual({ email: 'new.person@acme.test' });
+  });
+
+  it('lets the new user log in later with their password', async () => {
+    const { app } = testApp();
+    await request(app).post('/api/auth/register').send(profile);
+
+    const res = await request(app)
+      .post('/api/auth/login')
+      .send({ email: 'new.person@acme.test', password: profile.password });
+
+    expect(res.status).toBe(200);
+  });
+
+  it('rejects an email that already has a profile, without changing its password', async () => {
+    const { app } = testApp();
+
+    const res = await request(app)
+      .post('/api/auth/register')
+      .send({ ...TEST_USER, password: 'attacker-chosen' });
+
+    expect(res.status).toBe(409);
+    expect((await request(app).post('/api/auth/login').send(TEST_USER)).status).toBe(200);
+  });
+
+  it('rejects a short password and an invalid email with field messages', async () => {
+    const res = await request(testApp().app)
+      .post('/api/auth/register')
+      .send({ email: 'nope', password: 'short' });
+
+    expect(res.status).toBe(400);
+    expect(res.body.details).toMatchObject({
+      email: ['Enter a valid email'],
+      password: ['Use at least 8 characters'],
+    });
+  });
+});

@@ -18,6 +18,11 @@ export function AuthProvider({ children }) {
     onSuccess: (user) => queryClient.setQueryData(['me'], user),
   });
 
+  const register = useMutation({
+    mutationFn: (profile) => api.post('/auth/register', profile),
+    onSuccess: (user) => queryClient.setQueryData(['me'], user),
+  });
+
   const logout = useMutation({
     mutationFn: () => api.post('/auth/logout'),
     onSuccess: () => {
@@ -26,7 +31,7 @@ export function AuthProvider({ children }) {
     },
   });
 
-  const value = { user: me.data ?? null, loading: me.isPending, login, logout };
+  const value = { user: me.data ?? null, loading: me.isPending, login, register, logout };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 

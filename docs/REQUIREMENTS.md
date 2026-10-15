@@ -24,7 +24,7 @@ A single persona: the **HR Manager**. Comfortable with Excel, not technical. Nee
 | Currency         | Cross-country figures converted to USD at **fixed, documented rates**                                    | Comparisons across countries need one unit                             |
 | Excel bridge     | **Import** CSV/XLSX: validate every row, preview errors, then commit all-or-nothing (upsert by email)    | HR's data lives in Excel today; migration must be safe                 |
 |                  | **Export** current (filtered) list to CSV/XLSX                                                           | HR will keep sharing data in Excel                                     |
-| Access           | Single HR Manager login (session cookie)                                                                 | Salary data is sensitive; nothing should be publicly readable          |
+| Access           | HR Manager login (session cookie); HR profiles can be self-created on the login page                     | Salary data is sensitive; nothing should be publicly readable          |
 | Data             | Deterministic seed script with 10,000 realistic employees                                                | Demo and performance at real scale                                     |
 
 **Employee fields:** full name, email (unique), job title, department, country, currency (derived from country), employment type (full-time / part-time / contract), joining date, annual salary.
