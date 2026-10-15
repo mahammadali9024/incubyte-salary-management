@@ -1,0 +1,17 @@
+{
+  "name": "@acme/api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "seed": "node src/db/seed-cli.js"
+  },
+  "dependencies": {
+    "@acme/shared": "*",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "supertest": "^7.3.1"
+  }
+}
