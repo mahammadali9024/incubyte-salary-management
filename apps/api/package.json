@@ -14,7 +14,9 @@
     "better-sqlite3": "^13.0.3",
     "cookie-parser": "^1.4.7",
     "drizzle-orm": "^0.45.4",
-    "express": "^5.2.1"
+    "exceljs": "^4.4.0",
+    "express": "^5.2.1",
+    "multer": "^2.4.0"
   },
   "devDependencies": {
     "drizzle-kit": "^0.31.11",

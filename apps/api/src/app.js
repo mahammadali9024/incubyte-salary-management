@@ -6,8 +6,11 @@ import { authRoutes, requireAuth } from './auth/auth-routes.js';
 import { createEmployeeService } from './employees/employee-service.js';
 import { employeeRoutes } from './employees/employee-routes.js';
 import { errorHandler } from './http/error-handler.js';
+import { createEmployeeRepository } from './employees/employee-repository.js';
 import { createInsightsService } from './insights/insights-service.js';
 import { insightsRoutes } from './insights/insights-routes.js';
+import { createImportService } from './transfer/import-service.js';
+import { transferRoutes } from './transfer/transfer-routes.js';
 
 /**
  * Builds the Express app around an open database. Kept separate from server.js
@@ -33,7 +36,15 @@ export function buildApp({ db, sessionSecret, clock = systemClock, secureCookies
   });
 
   app.use('/api/auth', authRoutes(createAuthService(db, { bcryptRounds }), { secureCookies }));
-  app.use('/api/employees', requireAuth, employeeRoutes(createEmployeeService(db, clock)));
+  const employees = createEmployeeService(db, clock);
+  const transfer = transferRoutes({
+    employeeRepository: createEmployeeRepository(db),
+    importService: createImportService(db, employees),
+    clock,
+  });
+  // Mounted before the CRUD routes so /export etc. are not taken as an :id.
+  app.use('/api/employees', requireAuth, transfer);
+  app.use('/api/employees', requireAuth, employeeRoutes(employees));
   app.use('/api/insights', requireAuth, insightsRoutes(createInsightsService(db)));
 
   app.use('/api', (_req, res) => {

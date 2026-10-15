@@ -87,15 +87,15 @@ export function createEmployeeRepository(db) {
       return { items: rows.map(toEmployee), total };
     },
 
-    /** Every employee matching the filters, unpaged — used for export. */
-    *iterate(filters) {
-      const rows = db
+    /** Every employee matching the filters, unpaged — used for export (≈10k rows). */
+    findAll(filters) {
+      return db
         .select()
         .from(employees)
         .where(filtersFor(filters))
         .orderBy(...orderFor(filters))
-        .iterator();
-      for (const row of rows) yield toEmployee(row);
+        .all()
+        .map(toEmployee);
     },
 
     addSalaryChange(change) {
