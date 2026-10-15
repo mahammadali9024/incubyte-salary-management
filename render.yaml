@@ -1,0 +1,24 @@
+# Render blueprint: one free web service that builds the UI and serves it from the API.
+# The free tier has an ephemeral disk, so the database is re-seeded (10,000 employees)
+# whenever the service starts with an empty database. See docs/DECISIONS.md (3).
+services:
+  - type: web
+    name: acme-salary-management
+    runtime: node
+    plan: free
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 22.16.0
+      - key: NODE_ENV
+        value: production
+      - key: SEED_ON_START
+        value: 'true'
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: HR_EMAIL
+        value: hr@acme.example
+      - key: HR_PASSWORD
+        sync: false # set in the Render dashboard; never committed

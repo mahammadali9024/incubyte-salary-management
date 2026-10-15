@@ -17,7 +17,12 @@ if (config.seedOnStart && isEmpty(db)) {
 }
 createAuthService(db).ensureUser(config.hrEmail, config.hrPassword);
 
-const app = buildApp({ db, sessionSecret: config.sessionSecret, secureCookies: config.secureCookies });
+const app = buildApp({
+  db,
+  sessionSecret: config.sessionSecret,
+  secureCookies: config.secureCookies,
+  staticDir: config.staticDir,
+});
 app.listen(config.port, () => {
   console.log(`API listening on http://localhost:${config.port} (db: ${config.dbPath})`);
 });

@@ -1,3 +1,4 @@
+import { join } from 'node:path';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import { systemClock } from './clock.js';
@@ -22,8 +23,9 @@ import { transferRoutes } from './transfer/transfer-routes.js';
  * @param {{ today(): string }} [deps.clock]
  * @param {boolean} [deps.secureCookies] true in production (HTTPS)
  * @param {number} [deps.bcryptRounds]
+ * @param {string} [deps.staticDir] built web app to serve (production)
  */
-export function buildApp({ db, sessionSecret, clock = systemClock, secureCookies = false, bcryptRounds }) {
+export function buildApp({ db, sessionSecret, clock = systemClock, secureCookies = false, bcryptRounds, staticDir }) {
   if (!sessionSecret) throw new Error('sessionSecret is required');
 
   const app = express();
@@ -50,6 +52,15 @@ export function buildApp({ db, sessionSecret, clock = systemClock, secureCookies
   app.use('/api', (_req, res) => {
     res.status(404).json({ error: 'Not found' });
   });
+
+  if (staticDir) {
+    app.use(express.static(staticDir, { index: false, maxAge: '1h' }));
+    // Client-side routes (/employees, /insights) all load the single-page app.
+    app.get('/{*path}', (_req, res) => {
+      res.sendFile(join(staticDir, 'index.html'));
+    });
+  }
+
   app.use(errorHandler);
 
   return app;
